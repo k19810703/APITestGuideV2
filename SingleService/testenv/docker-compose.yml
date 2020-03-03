@@ -1,0 +1,16 @@
+version: '2'
+services:
+  sampleapp:
+    image: sampleapp
+    build: ../sampleapp
+    container_name: sampleapp
+    environment:
+      - service1=http://mockservice:1080
+      - service2=http://mockservice:1080
+    ports:
+      - 3000:3000
+  mockservice:
+    image: mockserver/mockserver
+    container_name: mockservice
+    ports:
+      - 1080:1080

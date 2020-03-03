@@ -1,0 +1,325 @@
+{
+	"info": {
+		"_postman_id": "ad51d7ac-278e-490d-9721-23d4044790ea",
+		"name": "APITestSample",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "モックデータクリア",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cabe0de1-5ffb-4459-89ac-f1af1b5ae3b3",
+						"exec": [
+							"const mockService = pm.environment.get(\"mockService\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mockService}}/mockserver/clear",
+					"host": [
+						"{{mockService}}"
+					],
+					"path": [
+						"mockserver",
+						"clear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "モックサービス１設定",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "baccb0fa-4f9d-495c-9224-f06f80d1db19",
+						"exec": [
+							"const mockService = pm.environment.get(\"mockService\");",
+							"pm.globals.set(\"reqBody\", JSON.stringify(data.mocks[0]));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{reqBody}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mockService}}/mockserver/expectation",
+					"host": [
+						"{{mockService}}"
+					],
+					"path": [
+						"mockserver",
+						"expectation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "モックサービス２設定",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "baccb0fa-4f9d-495c-9224-f06f80d1db19",
+						"exec": [
+							"const mockService = pm.environment.get(\"mockService\");",
+							"pm.globals.set(\"reqBody\", JSON.stringify(data.mocks[1]));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{reqBody}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mockService}}/mockserver/expectation",
+					"host": [
+						"{{mockService}}"
+					],
+					"path": [
+						"mockserver",
+						"expectation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "テスト",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d6bc43af-299c-495d-bf02-3e7dbbc92c6b",
+						"exec": [
+							"pm.globals.set(\"testcase1\", data.testcase.description);",
+							"pm.globals.set(\"testcondition\", data.testcase.condition);",
+							"const reqBody = data.input.reqBody;",
+							"pm.globals.set(\"reqBody\", JSON.stringify(reqBody));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "05c941ef-f1af-4035-910b-3c3be93b6151",
+						"exec": [
+							"const chai = require('chai');",
+							"const assert = chai.assert;",
+							"",
+							"pm.test(\"HTTPリスポンスが200\", function () {",
+							"    const responseCode = pm.response.code;",
+							"    assert.strictEqual(responseCode, data.verify.statusCode, 'リスポンスコードが２００ではありません')",
+							"});",
+							"",
+							"pm.test(\"リスポンスデータのinputが想定通り\", function () {",
+							"   const jsonData = pm.response.json();",
+							"    // 预想值部分从data文件中读取",
+							"    const expectData = data.verify.verifyData.input;",
+							"    const actualstr = JSON.stringify(jsonData.input);",
+							"    const expectstr = JSON.stringify(expectData);",
+							"    console.log('expectData', expectData);",
+							"    console.log('actualData', jsonData.input);",
+							"    assert.deepInclude(jsonData.input, expectData, `${actualstr} vs ${expectstr}`);",
+							"});",
+							"",
+							"pm.test(\"リスポンスデータのresponse1が想定通り\", function () {",
+							"   const jsonData = pm.response.json();",
+							"    // 预想值部分从data文件中读取",
+							"    const expectData = data.verify.verifyData.response1;",
+							"    // const actualstr = JSON.stringify(jsonData);",
+							"    // const expectstr = JSON.stringify(expectData);",
+							"    assert.deepInclude(jsonData.response1, expectData);",
+							"});",
+							"",
+							"pm.test(\"リスポンスデータのresponse2が想定通り\", function () {",
+							"   const jsonData = pm.response.json();",
+							"    // 预想值部分从data文件中读取",
+							"    const expectData = data.verify.verifyData.response2;",
+							"    const actualstr = JSON.stringify(jsonData.response2);",
+							"    const expectstr = JSON.stringify(expectData);",
+							"    assert.deepInclude(jsonData.response2, expectData, `${actualstr} vs ${expectstr}`);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{reqBody}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/testurl",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"testurl"
+					]
+				},
+				"description": "### {{testcase1}}\n### {{testcondition}}\n### 確認\n1.\tHTTPリスポンスが200\n2.\tリスポンスデータが想定通り"
+			},
+			"response": []
+		},
+		{
+			"name": "モックへのリクエスト検証",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "aacf3d7a-d970-444d-8e60-454c8cdf67b2",
+						"exec": [
+							"const mockService = pm.environment.get(\"mockService\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3a36c7de-5c50-4bb1-8856-d0ae249e6b12",
+						"exec": [
+							"const chai = require('chai');",
+							"const assert = chai.assert;",
+							"",
+							"",
+							"pm.test(\"HTTPリスポンスが200\", function () {",
+							"    const responseCode = pm.response.code;",
+							"",
+							"    assert.strictEqual(responseCode, data.verify.statusCode, 'リスポンスコードが２００ではありません')",
+							"});",
+							"",
+							"pm.test(\"モックサービスが２件リクスト受けたこと\", function () {",
+							"    const jsonData = pm.response.json();",
+							"",
+							"    assert.strictEqual(jsonData.length, 2);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mockService}}/mockserver/retrieve?type=REQUESTS",
+					"host": [
+						"{{mockService}}"
+					],
+					"path": [
+						"mockserver",
+						"retrieve"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "REQUESTS"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

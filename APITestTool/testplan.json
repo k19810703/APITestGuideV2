@@ -1,0 +1,18 @@
+[
+  {
+    "testcase": "./test1/APITestSample.postman_collection.json",
+    "testDataXls": "./test1/TestCase.xlsx",
+    "testDataJSON": "./test1/TestData.json",
+    "env": "./envconfig/apitestsample.postman_environment.json",
+    "reporttemplate": "./envconfig/mytemplat.hbs",
+    "report": "./report/testreport1.html"
+  },
+  {
+    "testcase": "./test2/APITestSample.postman_collection.json",
+    "testDataXls": "./test2/TestCase.xlsx",
+    "testDataJSON": "./test2/TestData.json",
+    "env": "./envconfig/apitestsample.postman_environment.json",
+    "reporttemplate": "./envconfig/mytemplat.hbs",
+    "report": "./report/testreport2.html"
+  }
+]

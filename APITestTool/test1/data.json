@@ -1,0 +1,116 @@
+[
+  {
+    "testcase": {
+      "description": "テストケース１",
+      "condition": "xxxxの場合"
+    },
+    "input": {
+      "reqBody": {
+        "name": {
+          "firstname": "huidong",
+          "lastname": "wu"
+        },
+        "age": 20
+      }
+    },
+    "mocks": [
+      {
+        "httpRequest": {
+          "path": "/dummypath1"
+        },
+        "httpResponse": {
+          "body": {
+            "result": "dummypath1"
+          },
+          "statusCode": 200
+        }
+      },
+      {
+        "httpRequest": {
+          "path": "/dummypath2"
+        },
+        "httpResponse": {
+          "body": {
+            "result": "dummypath2"
+          },
+          "statusCode": 200
+        }
+      }
+    ],
+    "verify": {
+      "statusCode": 200,
+      "verifyData": {
+        "input": {
+          "name": {
+            "firstname": "huidong",
+            "lastname": "wu"
+          },
+          "age": 20
+        },
+        "response1": {
+          "result": "dummypath1"
+        },
+        "response2": {
+          "result": "dummypath2"
+        }
+      }
+    }
+  },
+  {
+    "testcase": {
+      "description": "テストケース２",
+      "condition": "yyyyの場合"
+    },
+    "input": {
+      "reqBody": {
+        "name": {
+          "firstname": "wenjie",
+          "lastname": "wu"
+        },
+        "age": 18
+      }
+    },
+    "mocks": [
+      {
+        "httpRequest": {
+          "path": "/dummypath1"
+        },
+        "httpResponse": {
+          "body": {
+            "result": "dummypath3"
+          },
+          "statusCode": 200
+        }
+      },
+      {
+        "httpRequest": {
+          "path": "/dummypath2"
+        },
+        "httpResponse": {
+          "body": {
+            "result": "dummypath4"
+          },
+          "statusCode": 200
+        }
+      }
+    ],
+    "verify": {
+      "statusCode": 200,
+      "verifyData": {
+        "input": {
+          "name": {
+            "firstname": "wenjie",
+            "lastname": "wu"
+          },
+          "age": 18
+        },
+        "response1": {
+          "result": "dummypath3"
+        },
+        "response2": {
+          "result": "dummypath4"
+        }
+      }
+    }
+  }
+]
