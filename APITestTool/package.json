@@ -12,7 +12,7 @@
   "dependencies": {
     "exceljs": "^3.8.0",
     "jsonfile": "^6.0.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "newman": "^4.6.0",
     "newman-reporter-htmlextra": "^1.12.1"
   }
